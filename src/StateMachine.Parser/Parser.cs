@@ -14,7 +14,6 @@ public static class Parser
         // Parse the input and return the result
         foreach (var line in lines)
         {
-
             if (line.StartsWith("```"))
                 break;
 

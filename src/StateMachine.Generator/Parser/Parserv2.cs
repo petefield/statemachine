@@ -37,7 +37,7 @@ public static class Parserv2
 
                 var tokens = ParseLine(Linetokens);
 
-                transitions.Add( new TransitionDetails
+                transitions.Add(new TransitionDetails
                 {
                     From = tokens.startState,
                     Event = tokens.trigger,

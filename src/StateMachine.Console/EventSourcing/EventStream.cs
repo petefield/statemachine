@@ -1,9 +1,13 @@
-﻿internal class EventStream
+﻿namespace EventSourcing;
+
+internal class EventStream
 {
     private readonly Dictionary<Guid, List<IDomainEvent>> _events = [];
 
     public void AddEvent(Guid id, IDomainEvent evt)
     {
+        Console.WriteLine($"\tAdding {evt.GetType().Name} to EventStream for customer {id}");
+
         if (_events.ContainsKey(id))
         {
             _events[id].Add(evt);

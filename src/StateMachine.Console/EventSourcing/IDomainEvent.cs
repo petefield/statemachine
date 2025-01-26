@@ -1,4 +1,4 @@
-﻿namespace ExampleProject.Events;
+﻿namespace EventSourcing;
 
 public interface IDomainEvent : IStateChangeEvent
 {

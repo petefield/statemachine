@@ -1,24 +1,20 @@
-﻿using StateMachine.Generator;
+﻿
+using CustomerStateManagement.EventSourcing;
+using StateMachine.SourceGenerator;
 
-namespace ExampleProject.Models;
+namespace CustomerStateManagement.Domain.Customer;
 
-[GenerateStateMap<CustomerView, CustomerState>("Deceased-Day-2.md")]
-public partial class CustomerView : ISubject<CustomerState>
+[GenerateStateMap("Deceased-Day-2.md")]
+public partial class CustomerView : IStateMachine<CustomerState>, IStreamView
 {
-    public CustomerView(IEnumerable<IDomainEvent> events)
-    {
-        foreach (var evt in events)
-            HandleDomainEvent(evt);
-    }
-
     public CustomerState State { get; set; }
-
 
     public int AccountsHeld { get; set; }
 
-    public bool HandleDomainEvent(IDomainEvent evt)
+    public bool Apply(IDomainEvent evt)
     {
-        try {
+        try
+        {
             Console.Write($"\tUpdating Customer View with {evt.GetType().Name}...");
 
             var result = evt switch
@@ -42,11 +38,12 @@ public partial class CustomerView : ISubject<CustomerState>
         }
     }
 
-    private bool HandleAccountOpened(AccountOpened e) {
+    private bool HandleAccountOpened(AccountOpened e)
+    {
         AccountsHeld++;
         return true;
     }
-    
+
     private bool HandleAccountClosed(AccountClosed e)
     {
         AccountsHeld--;
@@ -56,5 +53,10 @@ public partial class CustomerView : ISubject<CustomerState>
     public override string ToString()
     {
         return $"Customer {{ Accounts: {AccountsHeld}, State: {State} }}";
+    }
+
+    public bool Apply(IEnumerable<IDomainEvent> domainEvents)
+    {
+        throw new NotImplementedException();
     }
 }

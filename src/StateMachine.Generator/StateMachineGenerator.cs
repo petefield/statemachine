@@ -5,43 +5,49 @@ using pfie.http.sourcegen;
 using System.Linq;
 using System.IO;
 using System;
+using StateMachine.SourceGenerator;
+using Microsoft.CodeAnalysis.Operations;
 
 namespace StateMachine.Generator;
 
 [Generator]
 public partial class StateMachineGenerator : IIncrementalGenerator
 {
-
     private static StateMachineDescription GetServiceDetail(GeneratorAttributeSyntaxContext ctx)
-    {   
-        try{
+    {
+        try
+        {
             var attribute = ctx.Attributes.First();
 
             var path = attribute.ConstructorArguments[0].Value?.ToString();
-            
-            if (path is null)
-                throw new Exception("path not found");
 
-            var classDeclartion = (ClassDeclarationSyntax)ctx.TargetNode;
+            if (string.IsNullOrWhiteSpace(path))
+                throw new Exception("Path is required");
 
-            var b = (GenericNameSyntax) classDeclartion.AttributeLists[0].Attributes[0].Name;
-            var subjectType = b.TypeArgumentList.Arguments[0].ToString();
-            var stateType = b.TypeArgumentList.Arguments[1].ToString();
+            var classDeclaration = (ClassDeclarationSyntax)ctx.TargetNode;
+            var symbol = ctx.SemanticModel.GetDeclaredSymbol(classDeclaration) as ITypeSymbol;
 
-            var classname = classDeclartion.Identifier.Text;
+            var interfaces = symbol!.AllInterfaces;
 
-            var namespaceNode = classDeclartion
+            var statemachineInterface = interfaces.SingleOrDefault(x => x.Name == "IStateMachine")
+                ?? throw new Exception("ISubject interface not found");
+
+            var stateTypeName = statemachineInterface.TypeArguments.First().Name;
+
+            var classname = classDeclaration.Identifier.Text;
+
+            var namespaceNode = classDeclaration
                 .Ancestors()
                 .Where(x => x is FileScopedNamespaceDeclarationSyntax)
                 .First();
 
             var namespaceName = ((FileScopedNamespaceDeclarationSyntax)namespaceNode).Name.ToString();
 
-            return new StateMachineDescription(path, subjectType, stateType, classname, namespaceName);
+            return new StateMachineDescription(path!, classname, stateTypeName, namespaceName);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-            throw new Exception($"{nameof(GetServiceDetail)} : {e.Message}")       ;
+            throw new Exception($"{nameof(GetServiceDetail)} : {e.Message}");
         }
     }
 
@@ -59,25 +65,27 @@ public partial class StateMachineGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        try {
+        try
+        {
 
             var additionalFiles = context.AdditionalTextsProvider
             .Select(static (text, cancellationToken) =>
             {
                 var name = Path.GetFileName(text.Path);
                 var code = text.GetText(cancellationToken)?.ToString() ?? string.Empty;
-                return new ConfigurationFile (name, code);
+                return new ConfigurationFile(name, code);
             }).Collect();
 
-            var stateMachines = context.SyntaxProvider.ForAttributeWithMetadataName(typeof(GenerateStateMapAttribute<,>).FullName,
+            var stateMachines = context.SyntaxProvider.ForAttributeWithMetadataName(typeof(GenerateStateMapAttribute).FullName,
                 predicate: static (node, _) => true,
                 transform: static (ctx, _) => GetServiceDetail(ctx)).Collect();
 
-            var combined = IncrementalValueProviderExtensions.Combine( additionalFiles, stateMachines);
+            var combined = IncrementalValueProviderExtensions.Combine(additionalFiles, stateMachines);
 
             context.RegisterSourceOutput(combined, Execute);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             throw new Exception($"{nameof(Initialize)} : {ex.Message} - {ex.StackTrace}", ex);
         }
     }
@@ -89,11 +97,11 @@ public partial class StateMachineGenerator : IIncrementalGenerator
             var configFile = tuple.configurationFiles.SingleOrDefault(x => x.Path == stateMachine.Path);
 
             if (configFile == null)
-               throw new System.Exception($"State Machine configuration `{stateMachine.Path}` could not be found ");
+                throw new Exception($"State Machine configuration `{stateMachine.Path}` could not be found ");
 
             var source = CSharpClientBuilder.Build(stateMachine, configFile.Code);
 
-            context.AddSource($"StateMachines/{stateMachine.Classname}.g.cs", source);
+            context.AddSource($"StateMachines/{stateMachine.SubjectType}.g.cs", source);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace pfie.http.sourcegen
 {
     public class CSharpClientBuilder
     {
-        public  static string Build(StateMachineDescription service, string config)
+        public static string Build(StateMachineDescription service, string config)
         {
             var sb = new StringBuilder();
             var transitions = Parserv2.Parse(config);
@@ -14,18 +14,18 @@ namespace pfie.http.sourcegen
 
             sb.AppendLine($"namespace {service.NamespaceName};");
 
-            sb.AppendLine($"public partial class {service.Classname} : StateMachine<{service.SubjectType}, {service.StateType}> ");
+            sb.AppendLine($"public partial class {service.SubjectType} : StateMachineBase<{service.SubjectType}, {service.StateType}> ");
             sb.AppendLine($"{{");
 
             sb.AppendLine($"\tprotected override List<ITransition<{service.SubjectType}, {service.StateType}>> Transitions => [");
 
             foreach (var transition in transitions)
             {
-                var cond = string.IsNullOrWhiteSpace( transition.Condition)
+                var cond = string.IsNullOrWhiteSpace(transition.Condition)
                     ? "null"
                     : $"(subject, evt) =>  {transition.Condition}";
 
-                var d= $"{ transition.Condition.Replace($"\"", "`") }";
+                var d = $"{transition.Condition.Replace($"\"", "`")}";
 
                 sb.AppendLine($"\t\t new Transition<{transition.Event}, {service.SubjectType}, {service.StateType}>({service.StateType}.{transition.From}, {service.StateType}.{transition.To}, {cond}, \"{d}\"),");
 
@@ -36,5 +36,5 @@ namespace pfie.http.sourcegen
             return sb.ToString();
         }
     }
-    
+
 }

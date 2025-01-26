@@ -1,17 +1,17 @@
 ﻿using StateMachine.Exceptions;
 
-public abstract class StateMachine<TSubject, TState> 
-    where TState : Enum 
-    where TSubject : ISubject<TState>
+public abstract class StateMachineBase<TSubject, TState>
+    where TState : Enum
+    where TSubject : IStateMachine<TState>
 {
     protected abstract List<ITransition<TSubject, TState>> Transitions { get; }
 
     public void ApplyTransition(TSubject subject, IStateChangeEvent evt)
-    { 
+    {
         subject.State = GetNextState(subject.State, evt, subject);
     }
 
-    public  TState GetNextState(TState currentState, IStateChangeEvent evt, TSubject subject)
+    public TState GetNextState(TState currentState, IStateChangeEvent evt, TSubject subject)
     {
         var candidateTransitions = Transitions.Where(
             t => t.ForTransitionType(evt)

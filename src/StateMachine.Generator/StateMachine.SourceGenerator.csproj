@@ -6,10 +6,9 @@
 		<IsRoslynComponent>true</IsRoslynComponent>
 		<LangVersion>latest</LangVersion>
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
-		<VersionPrefix>0.0.0</VersionPrefix>
-		<VersionSuffix>alpha-4</VersionSuffix>
+		<VersionPrefix>0.0.2</VersionPrefix>
 		<PackageOutputPath>$(SolutionDir)packages</PackageOutputPath>
-		 <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   		<IsPackable>true</IsPackable>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Title>State Machine Source Generator</Title>

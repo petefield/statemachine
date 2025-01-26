@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace StateMachine.Generator;
+namespace StateMachine.SourceGenerator;
 
 #pragma warning disable CS9113 // Parameter is unread.
-public class GenerateStateMapAttribute<TSubject, TState>(string FilePath) : Attribute
+public class GenerateStateMapAttribute(string FilePath) : Attribute
 #pragma warning restore CS9113 // Parameter is unread.
 {
 }

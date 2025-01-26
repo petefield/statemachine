@@ -1,4 +1,4 @@
-﻿namespace ExampleProject.Models;
+﻿namespace CustomerStateManagement.Domain.Customer;
 
 public enum CustomerState
 {
@@ -7,7 +7,7 @@ public enum CustomerState
     Known,
     Former,
     Forgotten,
-    Investigated,
+    UnderInvestigation,
     Blacklisted,
     Archived,
     Verified,

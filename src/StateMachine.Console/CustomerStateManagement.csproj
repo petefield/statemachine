@@ -11,21 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<AdditionalFiles Include="CustomerStates.md" />
-    <AdditionalFiles Include="Deceased-Day-2.md" />
-
+	    <AdditionalFiles Include="Deceased-Day-2.md" />
   </ItemGroup>
 
-	<ItemGroup>
-		<Compile Remove="Generated/**/*.cs" />
-	</ItemGroup>
+    <ItemGroup>
+	    <Compile Remove="Common\**" />
+	    <Compile Remove="Generated/**/*.cs" />
+	    <EmbeddedResource Remove="Common\**" />
+	    <None Remove="Common\**" />
+    </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="StateMachine.SourceGenerator" Version="0.0.0-alpha-4" />
+    <PackageReference Include="StateMachine.SourceGenerator" Version="0.0.2" />
   </ItemGroup>
 
   <ItemGroup>

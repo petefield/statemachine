@@ -9,7 +9,7 @@
 
         public override string ToString()
         {
-            return $"From {From} to {To} when {Event}{(string.IsNullOrWhiteSpace(Condition) ? "" : " if ") }{Condition}";
+            return $"From {From} to {To} when {Event}{(string.IsNullOrWhiteSpace(Condition) ? "" : " if ")}{Condition}";
         }
     }
 }
