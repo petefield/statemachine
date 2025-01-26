@@ -1,0 +1,23 @@
+@namespace BlazorApp1.Components
+
+@inject IJSRuntime JSRuntime
+
+    <div class="mermaid" data-diagram="@Diagram">
+    </div>
+    
+@code {
+    IJSObjectReference? mermaidmodule;
+
+    [Parameter] public string? Diagram {get; set;}
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {    
+        if(firstRender)
+        {
+            mermaidmodule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./modules/mermaidmodule.js");
+            await mermaidmodule.InvokeVoidAsync("Initialize");
+        }
+            
+        await mermaidmodule!.InvokeVoidAsync("Render", "mermaid");
+    }
+}

@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+	<AdditionalFiles Include="CustomerStates.md" />
+    <AdditionalFiles Include="Deceased-Day-2.md" />
+
+  </ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Generated/**/*.cs" />
+		<!-- All .cs files in a directory subtree -->
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StateMachine\StateMachine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StateMachine.SourceGenerator" Version="0.0.0-alpha-4" />
+  </ItemGroup>
+
+</Project>

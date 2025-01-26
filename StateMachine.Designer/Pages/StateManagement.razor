@@ -1,0 +1,204 @@
+﻿@page "/StateManagement"
+@    using BlazorApp1.Components
+@    using BlazorApp1.Models
+@    using StateDiagramParser
+@inject HttpClient Http
+
+<PageTitle>Customer State Manager</PageTitle>
+
+<h1>State Manager: <i> @subjectType</i></h1>
+
+@if (manifest != null) {
+
+    <div class="row">
+        <div  class="col-5">
+            <pre>@GetStateMap()</pre>
+        </div>
+
+        <div  class="col">
+            <Mermaid Diagram="@GetStateMap()" />
+        </div>
+    </div>
+
+    <button class="btn btn-primary"  @onclick="() => AddTransition()">Add</button>
+
+    <table class="table  table-hover">
+
+        <thead>
+            <tr>
+                <th>Start</th>
+                <th>Event</th>
+                <th>End</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var transition in transitions)
+            {
+                @if(editing && selectedTransition == transition )
+                {
+                    <tr class="table-active">
+                        <td>
+                            <InputSelect  class="form-select"  @bind-Value="transition.StartingState">
+                                @foreach (var e in States(subjectType))
+                                {
+                                    <option value="@e">@e</option>
+                                }
+                            </InputSelect>
+                        </td
+
+                        <td>
+                            <InputSelect  class="form-select"  @bind-Value="transition.Trigger">
+                                @foreach (var e in manifest.Events)
+                                {
+                                    <option value="@e.Name">@e.Name</option>
+                                }
+                            </InputSelect>
+                        </td>
+
+                        <td colspan="@(transition == selectedTransition ? 1 : 2)">
+                            <InputSelect class="form-select" @bind-Value="transition.EndingState">
+                                @foreach (var e in States(subjectType))
+                                {
+                                    <option value="@e">@e</option>
+                                }
+                            </InputSelect>
+                        </td>
+
+
+                        <td>
+                            <button class="btn btn-primary" @onclick="() => EndEdit()" >
+                                <i class="bi bi-floppy"></i>
+                            </button>
+                         
+                        </td>
+
+                    </tr>
+                }
+                else
+                {
+                    <tr @onclick="() => SelectTransition(transition)" class="@(transition == selectedTransition ? "table-active" :string.Empty) ">
+                        <td>
+                            <input class="form-control-plaintext" type="text" readonly value="@transition.StartingState" />
+                        </td>
+                        <td>
+                            <input class="form-control-plaintext" type="text" readonly value="@transition.Trigger" />
+                        </td>
+
+                        <td colspan="@(transition == selectedTransition ? 1 : 2)">
+                            <input class="form-control-plaintext" type="text" readonly value="@transition.EndingState" />
+                        </td>
+
+                        @if(transition == selectedTransition){
+
+                            <td>
+                                <button class="btn btn-primary" @onclick="() => StartEdit()" >
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                
+                                <button class="btn btn-primary" @onclick="() => DeleteTransition(transition)" >
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        }
+                    </tr>                    
+                }
+
+
+            }
+        </tbody>
+        
+    </table>
+
+}
+
+@code {
+    private Manifest? manifest;
+
+    private bool editing = false;
+
+    private TransitionData? selectedTransition;
+
+    private List<TransitionData> transitions = new List<TransitionData>();
+    
+    private String subjectType = "CustomerView";
+
+    private string[] States(string subjectType) => manifest?
+        .Entities
+        .SingleOrDefault(x => x.Name == subjectType)?.States?.ToArray() ?? Array.Empty<string>();
+
+    private void AddTransition()
+    {   
+        var transition = new TransitionData()
+        {
+            StartingState = States(subjectType)[0],
+            EndingState = States(subjectType)[0],
+            Trigger = manifest!.Events.First().Name
+        };
+
+        transitions.Add(transition);
+
+        selectedTransition = transition;
+        editing = true;
+    }
+
+    private void SelectTransition(TransitionData transition)
+    {
+        if (!editing)
+            this.selectedTransition = transition;
+    }
+
+    private void DeleteTransition(TransitionData transition) => transitions.Remove(transition);
+
+    private void StartEdit() => this.editing = true;
+
+    private void EndEdit() => this.editing = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var fileContent = await Http.GetStringAsync("Deceased-Day-2.md");
+        manifest = GetManifest(fileContent.Split(Environment.NewLine));
+        transitions = Parser.Parse(fileContent).ToList();
+    }
+ 
+    private Manifest? GetManifest(string[]  lines)
+    {
+        bool startReading = false;
+        var contentAfterJson = new System.Text.StringBuilder();
+
+        foreach (string line in lines)
+        {
+            // Check if the current line starts with ```json
+            if (line.TrimStart().StartsWith("```json"))
+            {
+                startReading = true;
+                continue; // Skip the line with ```json itself
+            }
+
+            // If we are past ```json, append the lines
+            if (startReading)
+            {
+                if(line!="```") 
+                    contentAfterJson.AppendLine(line);
+            }
+        }
+
+        var schema =  contentAfterJson.ToString();
+
+        return System.Text.Json.JsonSerializer.Deserialize<Manifest>(schema);
+    }
+    
+    private string GetStateMap()
+    {
+        var content = new System.Text.StringBuilder();
+
+        content.AppendLine("stateDiagram-v2");
+        content.AppendLine("[*] --> Suspect");
+        foreach(var transition in transitions)
+        {
+            content.AppendLine($"\t{transition.StartingState} --> {transition.EndingState}: {transition.Trigger}");
+        }
+
+        return content.ToString();
+    }
+}
