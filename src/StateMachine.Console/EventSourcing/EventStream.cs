@@ -2,11 +2,10 @@
 
 internal class EventStream
 {
-    private readonly Dictionary<Guid, List<IDomainEvent>> _events = [];
+    private readonly Dictionary<Guid, List<DomainEvent>> _events = [];
 
-    public void AddEvent(Guid id, IDomainEvent evt)
+    public void AddEvent(Guid id, DomainEvent evt)
     {
-        Console.WriteLine($"\tAdding {evt.GetType().Name} to EventStream for customer {id}");
 
         if (_events.ContainsKey(id))
         {
@@ -18,7 +17,7 @@ internal class EventStream
         }
     }
 
-    public IEnumerable<IDomainEvent> GetAllEvents(Guid id) => _events.TryGetValue(id, out var events)
+    public IEnumerable<DomainEvent> GetAllEvents(Guid id) => _events.TryGetValue(id, out var events)
         ? events
-        : Enumerable.Empty<IDomainEvent>();
+        : Enumerable.Empty<DomainEvent>();
 }

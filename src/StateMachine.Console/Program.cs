@@ -1,19 +1,21 @@
 ﻿
-using CustomerStateManagement.Domain.Customer;
-
 var eventSteam = new EventStream();
 var viewService = new ViewService(eventSteam);
 
+Console.WriteLine($"{Column("Received Event", 45)}|{Column( "State", 20 )}|{Column("Accounts", 15) }|");
+Console.WriteLine(new string('-',83));
+
+
 var customerId = Guid.NewGuid();
-Console.WriteLine(viewService.Get<CustomerView>(customerId));
+
 
 foreach (var evt in EventSteam())
 {
     eventSteam.AddEvent(customerId, evt);
-    Console.WriteLine(viewService.Get<CustomerView>(customerId));
+    DisplayCustomer(evt, viewService.Get<CustomerView>(customerId));
 }
 
-static IEnumerable<IDomainEvent> EventSteam()
+static IEnumerable<DomainEvent> EventSteam()
 {
     yield return new DetailsProvided();
     yield return new RiskCheckPassed();
@@ -21,10 +23,20 @@ static IEnumerable<IDomainEvent> EventSteam()
     yield return new AccountClosed();
     yield return new AccountOpened();
     yield return new AccountOpened();
-    yield return new AccountClosed();
-    yield return new AccountClosed();
-    yield return new AccountOpened();
     yield return new AccountOpened();
     yield return new InvestigationStarted();
     yield return new InvestigationCompleted(Outcome: false);
 }
+
+void DisplayCustomer(DomainEvent domainEvent, CustomerView customer) {
+
+    var eventdescription = domainEvent.ToString().Replace("{ }", "").Trim();
+
+    Console.Write($"{Column(eventdescription, 45)}| ");
+
+
+    Console.Write($"{Column(customer.State, 19)}| ");
+    Console.WriteLine($"{Column(customer.AccountsHeld, 14)}|");
+}
+
+string Column(object value, int width) => value.ToString().PadRight(width).Substring(0, width);

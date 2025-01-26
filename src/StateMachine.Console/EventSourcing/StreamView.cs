@@ -2,6 +2,6 @@
 {
     internal interface IStreamView
     {
-        public abstract bool Apply(IDomainEvent domainEvents);
+        public abstract bool Apply(DomainEvent domainEvents);
     }
 }

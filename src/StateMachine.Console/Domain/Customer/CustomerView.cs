@@ -1,6 +1,4 @@
-﻿
-using CustomerStateManagement.EventSourcing;
-using StateMachine.SourceGenerator;
+﻿using StateMachine.SourceGenerator;
 
 namespace CustomerStateManagement.Domain.Customer;
 
@@ -11,12 +9,10 @@ public partial class CustomerView : IStateMachine<CustomerState>, IStreamView
 
     public int AccountsHeld { get; set; }
 
-    public bool Apply(IDomainEvent evt)
+    public bool Apply(DomainEvent evt)
     {
         try
         {
-            Console.Write($"\tUpdating Customer View with {evt.GetType().Name}...");
-
             var result = evt switch
             {
                 AccountOpened e => HandleAccountOpened(e),
@@ -26,8 +22,6 @@ public partial class CustomerView : IStateMachine<CustomerState>, IStreamView
 
             if (result)
                 ApplyTransition(this, evt);
-
-            Console.WriteLine($"{result} : State is now {State}");
 
             return result;
         }
@@ -48,15 +42,5 @@ public partial class CustomerView : IStateMachine<CustomerState>, IStreamView
     {
         AccountsHeld--;
         return true;
-    }
-
-    public override string ToString()
-    {
-        return $"Customer {{ Accounts: {AccountsHeld}, State: {State} }}";
-    }
-
-    public bool Apply(IEnumerable<IDomainEvent> domainEvents)
-    {
-        throw new NotImplementedException();
     }
 }
