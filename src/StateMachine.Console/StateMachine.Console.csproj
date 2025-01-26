@@ -18,12 +18,7 @@
 
 	<ItemGroup>
 		<Compile Remove="Generated/**/*.cs" />
-		<!-- All .cs files in a directory subtree -->
 	</ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\StateMachine\StateMachine.csproj" />
-  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Common\" />
@@ -31,6 +26,10 @@
 
   <ItemGroup>
     <PackageReference Include="StateMachine.SourceGenerator" Version="0.0.0-alpha-4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StateMachine.ManifestGenerator\StateMachine.ManifestGenerator.csproj" />
   </ItemGroup>
 
 </Project>

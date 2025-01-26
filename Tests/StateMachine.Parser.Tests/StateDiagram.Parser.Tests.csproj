@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\StateMachine.Parser\StateDiagram.Parser.csproj" />
+    <ProjectReference Include="..\..\src\StateMachine.Parser\StateDiagram.Parser.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,28 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateDiagram.Parser", "StateMachine.Parser\StateDiagram.Parser.csproj", "{AA1637B7-F663-40C4-BC1A-A4D618C6B865}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateDiagram.Parser", "src\StateMachine.Parser\StateDiagram.Parser.csproj", "{AA1637B7-F663-40C4-BC1A-A4D618C6B865}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine", "StateMachine\StateMachine.csproj", "{0FDED2AD-E504-4A1A-93E7-667E68F13687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine", "src\StateMachine\StateMachine.csproj", "{0FDED2AD-E504-4A1A-93E7-667E68F13687}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine.SourceGenerator", "StateMachine.Generator\StateMachine.SourceGenerator.csproj", "{D2246C97-CF52-47FE-A099-462C6039B586}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine.SourceGenerator", "src\StateMachine.Generator\StateMachine.SourceGenerator.csproj", "{D2246C97-CF52-47FE-A099-462C6039B586}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine.Console", "StateMachine.Console\StateMachine.Console.csproj", "{178AEDD7-15DE-4E13-B55F-AB72344B6A9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine.Console", "src\StateMachine.Console\StateMachine.Console.csproj", "{178AEDD7-15DE-4E13-B55F-AB72344B6A9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine.Designer", "StateMachine.Designer\StateMachine.Designer.csproj", "{DBA0F1B0-765C-4E51-8283-78A371EE051A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine.Designer", "src\StateMachine.Designer\StateMachine.Designer.csproj", "{DBA0F1B0-765C-4E51-8283-78A371EE051A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18F60768-61ED-44C8-97BE-5B08F0D14238}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine.ManifestGenerator", "StateMachine.ManifestGenerator\StateMachine.ManifestGenerator.csproj", "{2353AAF2-56FB-4274-A694-2CB0F3BD017A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine.ManifestGenerator", "src\StateMachine.ManifestGenerator\StateMachine.ManifestGenerator.csproj", "{2353AAF2-56FB-4274-A694-2CB0F3BD017A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateDiagram.Parser.Tests", "Tests\StateMachine.Parser.Tests\StateDiagram.Parser.Tests.csproj", "{E9FB4B99-9D89-430F-B79A-E672DC73C097}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D013D91B-5AE1-4348-B010-687E9E4A56D6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CDAD7691-E576-44CF-B5B2-DC7488E02E80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
