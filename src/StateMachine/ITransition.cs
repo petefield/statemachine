@@ -8,4 +8,7 @@
 
     bool MatchCondition(TSubject sub, IEvent @event);
 
+
+    public bool hasCondition() ;
+
 }

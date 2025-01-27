@@ -10,7 +10,10 @@ var customerId = Guid.NewGuid();
 foreach (var evt in EventSteam())
 {
     eventSteam.AddEvent(customerId, evt);
-    DisplayCustomer(evt, viewService.Get<CustomerView>(customerId));
+
+    var customer = viewService.Get<CustomerView>(customerId);
+
+    DisplayCustomer(evt, customer);
 }
 
 static IEnumerable<DomainEvent> EventSteam()
@@ -28,6 +31,7 @@ static IEnumerable<DomainEvent> EventSteam()
     yield return new InvestigationCompleted(Outcome: true);
     yield return new InvestigationStarted();
     yield return new InvestigationCompleted(Outcome: false);
+    yield return new AccountOpened();
 
 }
 
@@ -36,8 +40,8 @@ void DisplayCustomer(DomainEvent domainEvent, CustomerView customer) {
     var eventdescription = domainEvent.ToString().Replace("{ }", "").Trim();
 
     Console.Write($"{Column(eventdescription, 45)}| ");
-    Console.Write($"{Column(customer.State, 19)}| ");
+    Console.Write($"{Column(customer.State.ToString() ?? "null", 19)}| ");
     Console.WriteLine($"{Column(customer.AccountsHeld, 14)}|");
 }
 
-string Column(object value, int width) => value.ToString().PadRight(width).Substring(0, width);
+string Column(object value, int width) => value.ToString()!.PadRight(width).Substring(0, width);

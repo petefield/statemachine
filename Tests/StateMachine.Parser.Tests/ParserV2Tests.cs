@@ -2,10 +2,10 @@ using StateDiagram.Parser;
 
 namespace StateMachine.Parser.Tests
 {
-    public class ParserV2Tests
+    public class ParserTests
     {
         [Fact]
-        public void Test1()
+        public void Parse_WhenGivenAValidStateDiagram_Returns_CorrectNumberOfTransitions()
         {
             var INPUT = @"``````mermaid
                         stateDiagram-v2
@@ -35,7 +35,7 @@ namespace StateMachine.Parser.Tests
                         ```";
             var transitions = StateDiagram.Parser.Parser.Parse(INPUT).ToList();
 
-            Assert.Equal(15, transitions.Count());
+            Assert.Equal(16, transitions.Count());
         }
     }
 }

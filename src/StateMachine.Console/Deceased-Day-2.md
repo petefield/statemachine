@@ -12,8 +12,8 @@ state InvestigationCompleted_choices <<choice>>
  Verified --> Customer: AccountOpened
  Customer --> Customer: AccountOpened
  Customer --> AccountClosed_choices: AccountClosed
-  AccountClosed_choices --> Former:  if subject.AccountsHeld == 0
-  AccountClosed_choices --> Customer: if subject.AccountsHeld != 0
+  AccountClosed_choices --> Former:  if subject.AccountsHeld == 1
+  AccountClosed_choices --> Customer: if subject.AccountsHeld !=1
  Customer --> UnderInvestigation: InvestigationStarted
  UnderInvestigation --> InvestigationCompleted_choices: InvestigationCompleted
   InvestigationCompleted_choices --> Customer: if evt.Outcome == true

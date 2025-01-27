@@ -25,4 +25,6 @@
 
         return $"'{Start}' -> {typeof(TTrigger).Name} -> '{End}' {when}";
     }
+
+    public bool hasCondition() => Condition is not null;
 }
