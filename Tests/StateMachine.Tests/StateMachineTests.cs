@@ -11,7 +11,7 @@ public class StateMachineTests
         _cat.StateMachine.AddTransition<CatFed>(CatState.Hungry, CatState.Happy);
         _cat.StateMachine.AddTransition<CatNotFed>(CatState.Happy, CatState.Hungry);
         _cat.StateMachine.AddTransition<CatNotFed>(CatState.Hungry, CatState.Hungry);
-        _cat.StateMachine.AddTransition<CatNotFed>(CatState.Hungry, CatState.Dead, (c, e) => c.Hunger > 10);
+        _cat.StateMachine.AddTransition<CatNotFed>(CatState.Hungry, CatState.Dead, (cat, e) => cat.Hunger > 3 );
         _cat.StateMachine.AddTransition<CatTeased>(CatState.Happy, CatState.Angry);        
     }
 
@@ -19,9 +19,7 @@ public class StateMachineTests
     public void UpdateState_WhenValidTransition_Should_UpdateSubjectState()
     {
         _cat.State = CatState.Happy;
-
         _cat.ApplyEvent(new CatTeased());
-
         Assert.Equal(CatState.Angry, _cat.State);
     }
 
@@ -35,9 +33,9 @@ public class StateMachineTests
     [Fact]
     public void UpdateState_WhenConditionMatched_Should_UpdateState()
     {
-        _cat.Hunger = 10;
+        _cat.Hunger = 4;
         _cat.State = CatState.Hungry;
-        _cat.ApplyEvent(new CatNotFed());
+        _cat.ApplyEvent(new CatNotFed("Forgot"));
         Assert.Equal(CatState.Dead, _cat.State);
     }
 
@@ -46,7 +44,7 @@ public class StateMachineTests
     {
         _cat.Hunger = 0;
         _cat.State = CatState.Hungry;
-        _cat.ApplyEvent(new CatNotFed());
+        _cat.ApplyEvent(new CatNotFed("Forgot"));
         Assert.Equal(CatState.Hungry, _cat.State);
     }
 

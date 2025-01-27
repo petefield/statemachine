@@ -1,6 +1,5 @@
 ﻿```mermaid 
 stateDiagram-v2
-[*] --> Suspect
 	Suspect --> Applicant: DetailsProvided
 	Applicant --> Verified: RiskCheckPassed
 	Applicant --> Known: SimplfiedCheckDone

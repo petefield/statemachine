@@ -31,8 +31,6 @@ static IEnumerable<DomainEvent> EventSteam()
     yield return new InvestigationCompleted(Outcome: true);
     yield return new InvestigationStarted();
     yield return new InvestigationCompleted(Outcome: false);
-    yield return new AccountOpened();
-
 }
 
 void DisplayCustomer(DomainEvent domainEvent, CustomerView customer) {
