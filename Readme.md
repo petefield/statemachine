@@ -5,7 +5,7 @@ State Machines may seem simple at first, but they can quickly evolve into comple
 The purpose of this project is twofold:
 
 1. To design and implement a simple, reusable state machine that is easy to integrate into existing projects while being flexible enough to accommodate a variety of use cases.
-2. To explore the concept of "Documentation as Code."
+2. To explore the concept of "Documentation as Code." Specifically : Using source code generation, the code can be automatically updated to reflect changes in the documentation. Moreover analysis tools can be used to ensure that the state machine is valid and complete.
 
 ---
 
