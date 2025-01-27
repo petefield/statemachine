@@ -3,6 +3,7 @@ namespace CustomerStateManagement.Domain.Customer;
 public partial class CustomerView : IStateMachine<CustomerState> 
 {
 	private List<ITransition<CustomerView, CustomerState>> Transitions => [
+		 new Transition<CustomerCreated, CustomerView, CustomerState>(null, CustomerState.Suspect, null, ""),
 		 new Transition<DetailsProvided, CustomerView, CustomerState>(CustomerState.Suspect, CustomerState.Applicant, null, ""),
 		 new Transition<RiskCheckPassed, CustomerView, CustomerState>(CustomerState.Applicant, CustomerState.Verified, null, ""),
 		 new Transition<SimplfiedCheckDone, CustomerView, CustomerState>(CustomerState.Applicant, CustomerState.Known, null, ""),
@@ -20,11 +21,11 @@ public partial class CustomerView : IStateMachine<CustomerState>
 		 new Transition<AccountOpened, CustomerView, CustomerState>(CustomerState.Former, CustomerState.Customer, null, ""),
 		 new Transition<RightToBeForgotten, CustomerView, CustomerState>(CustomerState.Former, CustomerState.Forgotten, null, ""),
 	];
-	public void UpdateState(IStateChangeEvent evt)
+	public void UpdateState(IEvent evt)
 	{
 		this.State = GetNextState(this.State, evt);
 	}
-	public CustomerState GetNextState(CustomerState currentState, IStateChangeEvent evt)
+	public CustomerState GetNextState(CustomerState? currentState, IEvent evt)
 	{
 		var candidateTransitions = Transitions.Where(
 			t => t.ForTransitionType(evt)

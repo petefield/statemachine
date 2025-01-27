@@ -12,7 +12,7 @@ public static class Parser
         var lines = input.Split('\n')
             .Skip(2)
             .Where(line => !string.IsNullOrWhiteSpace(line))
-            .Where(line => !line.Trim().StartsWith("[*]"))
+         //   .Where(line => !line.Trim().StartsWith("[*]"))
             .Where(line => !line.Trim().EndsWith("[*]"))
             .Select(x => x.Trim().Replace("\\", string.Empty));
 
@@ -21,6 +21,8 @@ public static class Parser
         {
             if (line.StartsWith("```"))
                 break;
+
+
 
             if (line.StartsWith("state") && line.EndsWith("<<choice>>"))
             {
@@ -36,7 +38,7 @@ public static class Parser
 
                 transitions.Add(new TransitionDetails
                 {
-                    From = tokens.startState,
+                    From = tokens.startState == "[*]" ? "Null" : tokens.startState,
                     Event = tokens.trigger,
                     To = tokens.endState,
                 });

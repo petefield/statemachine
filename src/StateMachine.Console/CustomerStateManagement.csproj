@@ -21,8 +21,9 @@
 	    <None Remove="Common\**" />
     </ItemGroup>
 
+
   <ItemGroup>
-    <PackageReference Include="StateMachine.SourceGenerator" Version="0.0.3-alpha" />
+    <PackageReference Include="StateMachine.SourceGenerator" Version="0.0.8-alpha" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿public interface IStateMachine<TState>
+﻿public interface IStateMachine<TState> where TState:  struct, Enum
 {
-    TState State { get; set; }
+    System.Nullable<TState> State { get; set; }
 }

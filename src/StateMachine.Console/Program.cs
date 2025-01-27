@@ -15,6 +15,7 @@ foreach (var evt in EventSteam())
 
 static IEnumerable<DomainEvent> EventSteam()
 {
+    yield return new CustomerCreated();
     yield return new DetailsProvided();
     yield return new RiskCheckPassed();
     yield return new AccountOpened();

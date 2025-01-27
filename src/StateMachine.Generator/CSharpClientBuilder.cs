@@ -30,19 +30,25 @@ namespace StateMachine.SourceGenerator
 
                 var d = $"{transition.Condition.Replace($"\"", "`")}";
 
-                sb.AppendLine($"\t\t new Transition<{transition.Event}, {service.SubjectType}, {service.StateType}>({service.StateType}.{transition.From}, {service.StateType}.{transition.To}, {cond}, \"{d}\"),");
+                var from = transition.From == "Null"
+                        ? "null"
+                        : $"{service.StateType}.{transition.From}";
+
+                var to = transition.To = $"{service.StateType}.{transition.To}";
+
+                sb.AppendLine($"\t\t new Transition<{transition.Event}, {service.SubjectType}, {service.StateType}>({from}, {to}, {cond}, \"{d}\"),");
 
             }
 
             sb.AppendLine("\t];");
 
 
-            sb.AppendLine($"\tpublic void UpdateState(IStateChangeEvent evt)");
+            sb.AppendLine($"\tpublic void UpdateState(IEvent evt)");
             sb.AppendLine("\t{");
             sb.AppendLine("\t\tthis.State = GetNextState(this.State, evt);");
             sb.AppendLine("\t}");
 
-            sb.AppendLine($"\tpublic {service.StateType} GetNextState({service.StateType} currentState, IStateChangeEvent evt)");
+            sb.AppendLine($"\tpublic {service.StateType} GetNextState({service.StateType}? currentState, IEvent evt)");
             sb.AppendLine("\t{");
             sb.AppendLine("\t\tvar candidateTransitions = Transitions.Where(");
             sb.AppendLine("\t\t\tt => t.ForTransitionType(evt)");

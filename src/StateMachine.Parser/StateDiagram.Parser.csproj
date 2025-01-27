@@ -11,7 +11,7 @@
 	  <Title>State Diagram Parser</Title>
 	  <Company>NewDay</Company>
 	  <Authors>Pete Field</Authors>
-	  <VersionPrefix>0.0.2-alpha</VersionPrefix>
+	  <VersionPrefix>0.0.3-alpha</VersionPrefix>
 	  <PackageOutputPath>$(SolutionDir)packages</PackageOutputPath>
 
   </PropertyGroup>
