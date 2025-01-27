@@ -6,8 +6,8 @@
 		<IsRoslynComponent>true</IsRoslynComponent>
 		<LangVersion>latest</LangVersion>
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
-		<VersionPrefix>0.0.12</VersionPrefix>
-		<PackageOutputPath>$(SolutionDir)..\..\packages</PackageOutputPath>
+		<VersionPrefix>0.0.3-alpha</VersionPrefix>
+		<PackageOutputPath>$(SolutionDir)packages</PackageOutputPath>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   		<IsPackable>true</IsPackable>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -19,7 +19,17 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="all" />
+		<PackageReference Include="StateDiagram.Parser" Version="0.0.2-alpha" PrivateAssets="all" GeneratePathProperty="true"  />
+
+		<None Include="$(PkgStateDiagram_Parser)\lib\netstandard2.0\*.dll"
+			Pack="true"
+			PackagePath="analyzers/dotnet/cs"
+			Visible="false" />
+		
 	</ItemGroup>
+
+
+
 
 	<ItemGroup>
 	  <None Remove="bin\Debug\netstandard2.0\\StateMachine.Generator.dll" />

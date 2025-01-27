@@ -5,8 +5,20 @@
 	  <ImplicitUsings>enable</ImplicitUsings>
 	  <Nullable>enable</Nullable>
 	  <LangVersion>latest</LangVersion>
+	  <IsPackable>true</IsPackable>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <Title>State Diagram Parser</Title>
+	  <Company>NewDay</Company>
+	  <Authors>Pete Field</Authors>
+	  <VersionPrefix>0.0.2-alpha</VersionPrefix>
+	  <PackageOutputPath>$(SolutionDir)packages</PackageOutputPath>
 
   </PropertyGroup>
 
 
+	<ItemGroup>
+		<None Include="docs\readme.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+	
 </Project>
