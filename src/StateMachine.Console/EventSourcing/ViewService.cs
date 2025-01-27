@@ -11,14 +11,11 @@ internal class ViewService
         this.eventStream = eventStream;
     }
 
-    public T Get<T>(Guid CustomerId) where T : IStreamView, new()
+    public T Get<T>(Guid CustomerId) where T : StreamView, new()
     {
         var events = eventStream.GetAllEvents(CustomerId);
         var view = new T();
-        foreach (var e in events)
-        {
-            view.Apply(e);
-        }
+        view.ApplyAll(events);
         return view;
     }
 }

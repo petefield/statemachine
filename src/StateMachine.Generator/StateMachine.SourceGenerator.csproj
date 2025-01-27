@@ -6,8 +6,8 @@
 		<IsRoslynComponent>true</IsRoslynComponent>
 		<LangVersion>latest</LangVersion>
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
-		<VersionPrefix>0.0.2</VersionPrefix>
-		<PackageOutputPath>$(SolutionDir)packages</PackageOutputPath>
+		<VersionPrefix>0.0.12</VersionPrefix>
+		<PackageOutputPath>$(SolutionDir)..\..\packages</PackageOutputPath>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   		<IsPackable>true</IsPackable>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
