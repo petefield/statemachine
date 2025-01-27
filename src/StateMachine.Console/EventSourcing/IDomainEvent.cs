@@ -1,6 +1,6 @@
 ﻿namespace EventSourcing;
 
-public abstract record DomainEvent : IStateChangeEvent
+public abstract record DomainEvent : IEvent
 {
     public override string ToString()
     {

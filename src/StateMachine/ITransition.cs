@@ -1,11 +1,11 @@
-﻿public interface ITransition<TSubject, TState>
+﻿public interface ITransition<TSubject, TState> where TState :  struct,Enum
 {
     TState End { get; }
 
-    TState Start { get; }
+    System.Nullable<TState> Start { get; }
 
-    bool ForTransitionType(IStateChangeEvent @event);
+    bool ForTransitionType(IEvent @event);
 
-    bool MatchCondition(TSubject sub, IStateChangeEvent @event);
+    bool MatchCondition(TSubject sub, IEvent @event);
 
 }

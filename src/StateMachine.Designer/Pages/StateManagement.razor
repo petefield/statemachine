@@ -158,7 +158,7 @@
     {
         var fileContent = await Http.GetStringAsync("Deceased-Day-2.md");
         manifest = GetManifest(fileContent.Split(Environment.NewLine));
-        transitions = Parserv2.Parse(fileContent).ToList();
+        transitions = Parser.Parse(fileContent).ToList();
     }
  
     private Manifest? GetManifest(string[]  lines)

@@ -10,7 +10,7 @@ internal class ManifestGenerator
 
     StateChangeEvent[] GetEvents() => Assembly.GetExecutingAssembly()
         .GetTypes()
-        .Where(x => !x.IsInterface && typeof(IStateChangeEvent).IsAssignableFrom(x))
+        .Where(x => !x.IsInterface && typeof(IEvent).IsAssignableFrom(x))
         .Select(x => new StateChangeEvent(
             Name: x.Name,
             Properties: x.GetProperties().Select(p => new Property(p.Name, new TypeInfo(p.PropertyType.FullName ?? "", GetEnumValueNames(p.PropertyType)))).ToArray()))
@@ -21,7 +21,7 @@ internal class ManifestGenerator
         .Where(ImplementsIStateManaged)
         .Select(et =>
         {
-            var statePropertyType = et.GetProperty(nameof(IStateMachine<object>.State))?.PropertyType;
+            var statePropertyType = et.GetProperty("State")?.PropertyType;
 
             if (statePropertyType is null)
                 throw new ArgumentException("");

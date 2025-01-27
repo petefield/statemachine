@@ -4,7 +4,7 @@ stateDiagram-v2
 state AccountClosed_choices <<choice>>
 state InvestigationCompleted_choices <<choice>>
 
-[*] --> Suspect
+[*] --> Suspect: CustomerCreated
  Suspect --> Applicant: DetailsProvided
  Applicant --> Verified: RiskCheckPassed
  Applicant --> Known: SimplfiedCheckDone

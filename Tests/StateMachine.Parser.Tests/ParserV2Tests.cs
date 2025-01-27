@@ -12,7 +12,7 @@ namespace StateMachine.Parser.Tests
 
                         state when_AccountClosed <<choice>>
 
-                        [*]			--> Suspect
+                        [*]			--> Suspect: CustomerCreated
                         Suspect		--> Applicant:			DetailsProvided
                         Applicant	--> Verified:			RiskCheckPassed
                         Applicant	--> Known:				SimplifiedCheckDone

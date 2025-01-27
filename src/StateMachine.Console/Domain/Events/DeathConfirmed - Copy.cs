@@ -1,6 +1,6 @@
 ﻿namespace CustomerStateManagement.Domain.Events;
 
-internal record CustomerCreated : DomainEvent
+internal record DeathConfirmed : DomainEvent
 {
 }
 
