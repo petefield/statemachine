@@ -1,12 +1,10 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
-using pfie.http.sourcegen;
 using System.Linq;
 using System.IO;
 using System;
 using StateMachine.SourceGenerator;
-using Microsoft.CodeAnalysis.Operations;
 
 namespace StateMachine.Generator;
 

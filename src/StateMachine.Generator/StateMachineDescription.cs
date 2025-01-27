@@ -1,6 +1,4 @@
-﻿
-
-namespace pfie.http.sourcegen
+﻿namespace StateMachine.SourceGenerator
 {
     public class StateMachineDescription
     {
