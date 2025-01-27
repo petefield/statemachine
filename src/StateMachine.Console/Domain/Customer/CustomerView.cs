@@ -3,13 +3,13 @@
 namespace CustomerStateManagement.Domain.Customer;
 
 [GenerateStateMap("Deceased-Day-2.md")]
-public partial class CustomerView : IStateMachine<CustomerState>, IStreamView
+public partial class CustomerView : StreamView, IStateMachine<CustomerState>
 {
     public CustomerState State { get; set; }
 
     public int AccountsHeld { get; set; }
 
-    public bool Apply(DomainEvent evt)
+    public override bool Apply(DomainEvent evt)
     {
         try
         {
@@ -21,7 +21,7 @@ public partial class CustomerView : IStateMachine<CustomerState>, IStreamView
             };
 
             if (result)
-                ApplyTransition(this, evt);
+                UpdateState(evt);
 
             return result;
         }

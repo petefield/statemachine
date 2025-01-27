@@ -1,7 +1,20 @@
 ﻿namespace CustomerStateManagement.EventSourcing
 {
-    internal interface IStreamView
+    public abstract class StreamView
     {
-        public abstract bool Apply(DomainEvent domainEvents);
+        public bool ApplyAll(IEnumerable<DomainEvent> domainEvents)
+        {
+            bool allEventsApplied = true; 
+
+            foreach (var domainEvent in domainEvents)
+            {
+                allEventsApplied = Apply(domainEvent);
+                if (!allEventsApplied) 
+                    break;
+            }
+
+            return allEventsApplied;
+        }
+        public abstract bool Apply(DomainEvent domainEvent);
     }
 }

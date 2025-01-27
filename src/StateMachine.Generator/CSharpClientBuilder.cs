@@ -1,5 +1,8 @@
-﻿using System.Text;
+﻿using System.Net.NetworkInformation;
+using System;
+using System.Text;
 using StateDiagram.Parser;
+using System.Xml.Linq;
 
 namespace StateMachine.SourceGenerator
 {
@@ -14,10 +17,10 @@ namespace StateMachine.SourceGenerator
 
             sb.AppendLine($"namespace {service.NamespaceName};");
 
-            sb.AppendLine($"public partial class {service.SubjectType} : StateMachineBase<{service.SubjectType}, {service.StateType}> ");
+            sb.AppendLine($"public partial class {service.SubjectType} : IStateMachine<{service.StateType}> ");
             sb.AppendLine($"{{");
 
-            sb.AppendLine($"\tprotected override List<ITransition<{service.SubjectType}, {service.StateType}>> Transitions => [");
+            sb.AppendLine($"\tprivate List<ITransition<{service.SubjectType}, {service.StateType}>> Transitions => [");
 
             foreach (var transition in transitions)
             {
@@ -32,8 +35,31 @@ namespace StateMachine.SourceGenerator
             }
 
             sb.AppendLine("\t];");
+
+
+            sb.AppendLine($"\tpublic void UpdateState(IStateChangeEvent evt)");
+            sb.AppendLine("\t{");
+            sb.AppendLine("\t\tthis.State = GetNextState(this.State, evt);");
+            sb.AppendLine("\t}");
+
+            sb.AppendLine($"\tpublic {service.StateType} GetNextState({service.StateType} currentState, IStateChangeEvent evt)");
+            sb.AppendLine("\t{");
+            sb.AppendLine("\t\tvar candidateTransitions = Transitions.Where(");
+            sb.AppendLine("\t\t\tt => t.ForTransitionType(evt)");
+            sb.AppendLine("\t\t\t&& t.Start.Equals(currentState)");
+            sb.AppendLine("\t\t\t&& t.MatchCondition(this, evt)).ToList();");
+
+            sb.AppendLine("\t\tif (!candidateTransitions.Any())");
+            sb.AppendLine($"\t\t\tthrow new Exception(\"Invalid state transition from `{service.SubjectType}` for event ` evt.GetType().Name`\");");
+
+            sb.AppendLine("\t\tif (candidateTransitions.Count() > 1)");
+            sb.AppendLine("\t\t\tthrow new MultipleStateMatchesException($\"Multiple possible state transitions found while attempting to apply '{evt.GetType().Name}' to a subject with state `{this.State}`. \", candidateTransitions.Select(transition => transition.ToString()).ToArray());");
+
+            sb.AppendLine("\t\treturn candidateTransitions.Single().End;");
+            sb.AppendLine("\t}");
             sb.AppendLine("}");
             return sb.ToString();
+
         }
     }
 

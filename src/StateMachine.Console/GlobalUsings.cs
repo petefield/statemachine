@@ -5,5 +5,6 @@ global using EventSourcing;
 global using CustomerStateManagement.Domain.Events;
 global using CustomerStateManagement.EventSourcing;
 global using CustomerStateManagement.Domain.Customer;
+global using StateMachine.Exceptions;
 
 
