@@ -11,16 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-	    <AdditionalFiles Include="Deceased-Day-2.md" />
+	    <AdditionalFiles Include="CustomerViewStateDiagram.md" />
   </ItemGroup>
 
-    <ItemGroup>
-	    <Compile Remove="Common\**" />
-	    <Compile Remove="Generated/**/*.cs" />
-	    <EmbeddedResource Remove="Common\**" />
-	    <None Remove="Common\**" />
-    </ItemGroup>
-
+  <ItemGroup>
+        <Compile Remove="Generated/**/*.cs" />
+   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="StateMachine.SourceGenerator" Version="0.0.8-alpha" />

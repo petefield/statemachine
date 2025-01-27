@@ -2,7 +2,7 @@
 
 namespace CustomerStateManagement.Domain.Customer;
 
-[GenerateStateMap("Deceased-Day-2.md")]
+[GenerateStateMap("CustomerViewStateDiagram.md")]
 public partial class CustomerView : StreamView, IStateMachine<CustomerState>
 {
     public CustomerState? State { get; set; }
