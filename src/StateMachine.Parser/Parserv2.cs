@@ -2,7 +2,7 @@
 
 namespace StateDiagram.Parser;
 
-public static class Parserv2
+public static class Parser
 {
     public static IEnumerable<TransitionDetails> Parse(string input)
     {

@@ -22,7 +22,7 @@
     </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StateMachine.SourceGenerator" Version="0.0.12" />
+    <PackageReference Include="StateMachine.SourceGenerator" Version="0.0.3-alpha" />
   </ItemGroup>
 
   <ItemGroup>
