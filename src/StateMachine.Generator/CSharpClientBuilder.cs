@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using StateDiagram.Parser;
 
-namespace pfie.http.sourcegen
+namespace StateMachine.SourceGenerator
 {
     public class CSharpClientBuilder
     {
