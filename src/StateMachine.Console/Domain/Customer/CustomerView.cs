@@ -13,6 +13,9 @@ public partial class CustomerView : StreamView, IStateMachine<CustomerState>
     {
         try
         {
+
+            UpdateState(evt);
+
             var result = evt switch
             {
                 AccountOpened e => HandleAccountOpened(e),
@@ -20,14 +23,16 @@ public partial class CustomerView : StreamView, IStateMachine<CustomerState>
                 _ => true
             };
 
-            if (result)
-                UpdateState(evt);
 
             return result;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine(ex.Message);
+            var fg = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Event `{evt.GetType().Name}` cannot be applied to a customer with state '{State}'");
+            Console.ForegroundColor = fg;
+
             return false;
         }
     }

@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C1D90A5D-DC4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateMachine.Designer", "src\StateMachine.Designer\StateMachine.Designer.csproj", "{FDF171F9-CE4A-4038-B16A-96342938AD59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateMachine.Tests", "Tests\StateMachine.Tests\StateMachine.Tests.csproj", "{324A354A-C534-4B86-8621-2EDF1A5481E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +62,10 @@ Global
 		{FDF171F9-CE4A-4038-B16A-96342938AD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDF171F9-CE4A-4038-B16A-96342938AD59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDF171F9-CE4A-4038-B16A-96342938AD59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{324A354A-C534-4B86-8621-2EDF1A5481E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{324A354A-C534-4B86-8621-2EDF1A5481E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{324A354A-C534-4B86-8621-2EDF1A5481E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{324A354A-C534-4B86-8621-2EDF1A5481E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{2353AAF2-56FB-4274-A694-2CB0F3BD017A} = {C1D90A5D-DC40-4AEB-AA97-B409C041610B}
 		{E9FB4B99-9D89-430F-B79A-E672DC73C097} = {D013D91B-5AE1-4348-B010-687E9E4A56D6}
 		{FDF171F9-CE4A-4038-B16A-96342938AD59} = {C1D90A5D-DC40-4AEB-AA97-B409C041610B}
+		{324A354A-C534-4B86-8621-2EDF1A5481E1} = {D013D91B-5AE1-4348-B010-687E9E4A56D6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74CBE5CB-FC04-468B-8C53-F842982EF893}
