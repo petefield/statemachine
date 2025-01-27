@@ -5,9 +5,7 @@ var viewService = new ViewService(eventSteam);
 Console.WriteLine($"{Column("Received Event", 45)}|{Column( "State", 20 )}|{Column("Accounts", 15) }|");
 Console.WriteLine(new string('-',83));
 
-
 var customerId = Guid.NewGuid();
-
 
 foreach (var evt in EventSteam())
 {
@@ -24,8 +22,12 @@ static IEnumerable<DomainEvent> EventSteam()
     yield return new AccountOpened();
     yield return new AccountOpened();
     yield return new AccountOpened();
+    yield return new AccountClosed();
+    yield return new InvestigationStarted();
+    yield return new InvestigationCompleted(Outcome: true);
     yield return new InvestigationStarted();
     yield return new InvestigationCompleted(Outcome: false);
+
 }
 
 void DisplayCustomer(DomainEvent domainEvent, CustomerView customer) {
@@ -33,8 +35,6 @@ void DisplayCustomer(DomainEvent domainEvent, CustomerView customer) {
     var eventdescription = domainEvent.ToString().Replace("{ }", "").Trim();
 
     Console.Write($"{Column(eventdescription, 45)}| ");
-
-
     Console.Write($"{Column(customer.State, 19)}| ");
     Console.WriteLine($"{Column(customer.AccountsHeld, 14)}|");
 }
